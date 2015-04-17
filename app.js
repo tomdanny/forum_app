@@ -36,17 +36,26 @@ app.post('/usernames/create', function(req, res){
 });
 
   app.get('/topics/new', function(req, res) {
-    var newTopicsTemplate = fs.readFileSync('./views/new_topic.html', 'utf8');
-    res.send(newTopicsTemplate)
+    res.send(fs.readFileSync('./views/new_topic.html', 'utf8'));
+    res.redirect('/topics');
 });
 
-app.get('/usernames/:id', function(req, res){
+  // app.post('/topics/:id', function(req, res) {
+  //     db.run("INSERT INTO topics (title, description, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', 0 , 2)");
+  //     res.redirect('/topics');
+    // var id = req.params.id;
+    // db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topics) {
+
+    // })
+  //});
+
+app.get('/topics/:id', function(req, res){
   var id = req.params.id;
-  db.all("SELECT * FROM usernames WHERE id = " + id + ";", {}, function(err, username){
-    fs.readFile('./views/show.html', 'utf8', function(err, html){
-      console.log(username);
+  db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topic){
+    fs.readFile('./views/read_topic.html', 'utf8', function(err, html){
+      console.log(topic);
       // Sending just the single puppy object. No need to iterate this way. Sweet.
-      var renderedHTML = Mustache.render(html, username[0]);
+      var renderedHTML = Mustache.render(html, topic[0]);
       res.send(renderedHTML);
     });
   });
