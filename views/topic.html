@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Forum Topics</title>
+</head>
+<body>
+
+  <h1>Travel Forum Topics</h1>
+
+  <button><a href='/'>Home Page</a></button><br />
+
+  <button><a href='/topics/new'>CREATE TOPIC</a></button>
+
+  <ul>
+    {{#allTopics}}
+      <li><a href="/topic/{{id}}">{{title}} - {{body}} - {{vote}} - {{user_id}}</a></li>
+    {{/allTopics}}
+  </ul>
+  
+</body>
+</html>

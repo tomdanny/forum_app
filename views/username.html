@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Username</title>
+</head>
+<body>
+  <a href='/'>Home Page</a>
+
+  <ul>
+    {{#allUsernames}}
+      <li><a href="/topics/{{id}}">{{id}} - {{name}}</a></li>
+    {{/allUsernames}}
+  </ul>
+  
+</body>
+</html>
