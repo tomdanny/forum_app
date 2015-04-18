@@ -14,10 +14,16 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 
+
+// THIS IS WELCOME INDEX PAGE
 app.get('/', function(req, res) {
   res.send(fs.readFileSync("./views/index.html", 'utf8'));
 });
+// THIS IS THE END OF WELCOME INDEX PAGE
 
+// -------------------------------------------------------
+
+// THIS IS CREATING NEW USERNAME
 app.post('/usernames/create', function(req, res){
   console.log(req.body);
   db.run("INSERT INTO usernames (name) VALUES ('" + req.body.name + "')");
@@ -25,7 +31,11 @@ app.post('/usernames/create', function(req, res){
   //user = req.body.name;
   res.send("Welcome " + req.body.name);
 });
+// THIS IS END OF CREATING NEW USERNAME
 
+// --------------------------------------------------------
+
+// THIS IS LISTING ALL THE TOPICS
   app.get('/topics', function(req, res) {
     var template = fs.readFileSync('./views/topic.html', 'utf8');
 
@@ -34,45 +44,79 @@ app.post('/usernames/create', function(req, res){
       res.send(html);
   });
 });
+// THIS IS THE END OF ALL THE TOPICS
 
+// ---------------------------------------------------------
+
+// THIS IS GETTING YOU TO PAGE TO CREATE TOPIC
   app.get('/topics/new', function(req, res) {
     res.send(fs.readFileSync('./views/new_topic.html', 'utf8'));
     res.redirect('/topics');
 });
+// THIS IS THE END OF GETTING TO CREATE TOPIC PAGE
 
-  // app.post('/topics/:id', function(req, res) {
-  //     db.run("INSERT INTO topics (title, description, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', 0 , 2)");
-  //     res.redirect('/topics');
-    // var id = req.params.id;
-    // db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topics) {
+// ----------------------------------------------------------
 
-    // })
-  //});
+// THIS IS CREATING NEW TOPIC
+app.post('/topics/new', function(req, res) {
+  //console.log(req.body)
+  db.run("INSERT INTO topics (title, description) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + 0 + "')");
+  res.redirect('/topics');
+});
 
+// THIS IS THE END OF CREATING NEW TOPIC
+
+// -----------------------------------------------------------
+
+// THIS IS GETTING YOU TO SPECIFIC TOPIC TO EDIT IT
 app.get('/topics/:id', function(req, res){
   var id = req.params.id;
   db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topic){
     fs.readFile('./views/read_topic.html', 'utf8', function(err, html){
-      console.log(topic);
-      // Sending just the single puppy object. No need to iterate this way. Sweet.
+      //console.log(topic);
       var renderedHTML = Mustache.render(html, topic[0]);
       res.send(renderedHTML);
     });
   });
 });
+// THIS IS THE END OF EDITING SPECIFIC TOPIC
 
-app.delete('/usernames/:id', function(req, res){
-  var id = req.params.id;
-  db.run("DELETE FROM usernames WHERE id = " + id + ";");
-  res.redirect("/usernames");
-});
+// -----------------------------------------------------------
 
-app.put('/usernames/:id', function(req, res){
+// app.delete('/usernames/:id', function(req, res){
+//   var id = req.params.id;
+//   db.run("DELETE FROM usernames WHERE id = " + id + ";");
+//   res.redirect("/usernames");
+// });
+
+// ----------------------------------------------------------
+
+// THIS IS UPDATING VOTE ON SPECIFIC TOPIC
+app.put('/topics/:id', function(req, res){
   var id = req.params.id;
-  var userInfo = req.body;
-  db.run("UPDATE usernames SET name = '" + userInfo.name + "' WHERE id = " + id + ";");
-  res.redirect('/usernames');
+  var userVote = 0;
+  while(userVote < 10) {
+  //for(var userVote = 0; userVote < 7;) {
+  if(id) {
+
+  userVote ++;
+  console.log(userVote)
+  //res.send(userInfo)
+  db.run("UPDATE topics SET vote = '" + userVote + "' WHERE id = " + id + ";");
+  res.redirect('/topics/' + id);
+  }
+  }
 });
+// THIS IS THE END OF UPDATING VOTE ON SPECIFIC TOPIC
+
+// ----------------------------------------------------------
+
+// app.post('/topics/topic_id/comments', function(req, res){
+//   console.log(req.body);
+//   db.run("INSERT INTO comments (comment) VALUES ('" + req.body.comment + "')");
+//   res.redirect('/topics/:id');
+//   //user = req.body.name;
+// });
 
 app.listen(3000, function() {
   console.log("LISTENING");
