@@ -13,6 +13,7 @@ var app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
+app.use(express.static(__dirname + '/views'));
 
 
 // THIS IS WELCOME INDEX PAGE
@@ -60,15 +61,22 @@ app.post('/usernames/create', function(req, res){
 // THIS IS CREATING NEW TOPIC
 app.post('/topics/new', function(req, res) {
   //console.log(req.body)
-  db.run("INSERT INTO topics (title, description) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + 0 + "')");
+  db.all("SELECT * FROM usernames WHERE name = '" + req.body.name + "';", {}, function(err, data){
+  db.all("SELECT * FROM topics WHERE user_id = '" + data.id + "';", {}, function(err, user){
+    //console.log(user)
+    user = user.id
+  db.run("INSERT INTO topics (title, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + user + "')");
+  //console.log(req.body.name)
   res.redirect('/topics');
+ });
+});
 });
 
 // THIS IS THE END OF CREATING NEW TOPIC
 
 // -----------------------------------------------------------
 
-// THIS IS GETTING YOU TO SPECIFIC TOPIC TO EDIT IT
+// THIS IS GETTING YOU TO SPECIFIC TOPIC TO VOTE OR COMMENT
 app.get('/topics/:id', function(req, res){
   var id = req.params.id;
   db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topic){
@@ -79,7 +87,7 @@ app.get('/topics/:id', function(req, res){
     });
   });
 });
-// THIS IS THE END OF EDITING SPECIFIC TOPIC
+// THIS IS THE END OF SPECIFIC TOPIC
 
 // -----------------------------------------------------------
 
@@ -95,28 +103,30 @@ app.get('/topics/:id', function(req, res){
 app.put('/topics/:id', function(req, res){
   var id = req.params.id;
   var userVote = 0;
+  //if(id) {
   while(userVote < 10) {
   //for(var userVote = 0; userVote < 7;) {
-  if(id) {
 
-  userVote ++;
-  console.log(userVote)
+  //userVote ++;
+  //console.log(userVote)
   //res.send(userInfo)
-  db.run("UPDATE topics SET vote = '" + userVote + "' WHERE id = " + id + ";");
+  db.run("UPDATE topics SET vote = '" + userVote++ + "' WHERE id = " + id + ";");
   res.redirect('/topics/' + id);
-  }
+  //}
   }
 });
 // THIS IS THE END OF UPDATING VOTE ON SPECIFIC TOPIC
 
 // ----------------------------------------------------------
 
-// app.post('/topics/topic_id/comments', function(req, res){
-//   console.log(req.body);
-//   db.run("INSERT INTO comments (comment) VALUES ('" + req.body.comment + "')");
-//   res.redirect('/topics/:id');
-//   //user = req.body.name;
-// });
+// THIS IS COMMENTING ON SPECIFIC TOPIC
+app.post('/topics/topic_id/comments', function(req, res){
+  console.log(req.body);
+  db.run("INSERT INTO comments (comment) VALUES ('" + req.body.comment + "')");
+  res.redirect('/topics/:id');
+  //user = req.body.name;
+});
+// THIS IS END OF COMMENTING ON SPECIFIC TOPIC
 
 app.listen(3000, function() {
   console.log("LISTENING");

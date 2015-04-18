@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
   <title>Topic Title</title>
 </head>
 <body>
 
-  <h1>{{title}}</h1>
+    <ul>
+      <li><a href="/">Home Page</a></li>
+      <li><a href="/topics">Topics</a></li>
+      <!-- <li><a href="#">Worst Poems</a></li> -->
+    </ul>
+
+  <h2>{{title}}</h2>
  <!--  <p>{{description}}</p> -->
-  <button><a href='/topics'>List all Topics</a></button>
 <!--   <form method="POST" action="/topics/{{id}}?_method=PUT">
     <input type="text" name="description" value="{{description}}">
 
@@ -24,12 +30,13 @@
     <p>{{description}}</p>
     <input type="button" name="vote" value="{{vote}}">
     <button type="submit">Vote</button>
-  </form>
+  </form><br />
 
-  <form method="POST" action="/comments/comment">
+  <form method="POST" action="/topics/topic_id/comments">
     <label>
-      Leave a comment:
-      <input type="text" name="comment" value="{{comment}}">
+      Leave a comment: <br />
+      <textarea name='comment' value="{{comment}}"></textarea><br />
+      <!-- <input type="text" width="50px" name="comment" value="{{comment}}"> -->
       <button type="submit">Submit</button>
     </label>
 

@@ -2,19 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
   <title>Travel Forum Topics</title>
 </head>
 <body>
 
   <h1>Travel Forum Topics</h1>
 
-  <button><a href='/'>Home Page</a></button><br />
+    <ul>
+      <li><a href="/">Home Page</a></li>
+      <li><a href="/topics">Topics</a></li>
+      <!-- <li><a href="#">Worst Poems</a></li> -->
+    </ul>
+
+  <!-- <button><a href='/'>Home Page</a></button><br /> -->
 
   <button><a href='/topics/new'>CREATE TOPIC</a></button>
 
   <ul>
     {{#allTopics}}
-      <li><a href="/topics/{{id}}">{{title}} - {{description}} - {{vote}} - {{user_id}}</a></li>
+      <li><a href="/topics/{{id}}">{{title}} - {{vote}} - {{user_id}}</a></li>
     {{/allTopics}}
   </ul>
   
