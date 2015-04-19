@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
 
 // THIS IS CREATING NEW USERNAME
 app.post('/usernames/create', function(req, res){
-  console.log(req.body);
+  //console.log(req.body);
   db.run("INSERT INTO usernames (name) VALUES ('" + req.body.name + "')");
   res.redirect('/topics');
   //user = req.body.name;
@@ -60,17 +60,19 @@ app.post('/usernames/create', function(req, res){
 
 // THIS IS CREATING NEW TOPIC
 app.post('/topics/new', function(req, res) {
-  //console.log(req.body)
-  db.all("SELECT * FROM usernames WHERE name = '" + req.body.name + "';", {}, function(err, data){
+  console.log(req.body)
+  db.all("SELECT * FROM usernames WHERE id = '" + req.body + "';", {}, function(err, data){
+    //console.log(data[0])
   db.all("SELECT * FROM topics WHERE user_id = '" + data.id + "';", {}, function(err, user){
     //console.log(user)
     user = user.id
-  db.run("INSERT INTO topics (title, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + user + "')");
+  db.run("INSERT INTO topics (title, description, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + user + "')");
   //console.log(req.body.name)
   res.redirect('/topics');
  });
 });
 });
+
 
 // THIS IS THE END OF CREATING NEW TOPIC
 
@@ -121,10 +123,15 @@ app.put('/topics/:id', function(req, res){
 
 // THIS IS COMMENTING ON SPECIFIC TOPIC
 app.post('/topics/topic_id/comments', function(req, res){
-  console.log(req.body);
+  //console.log(req.body);
+
+  // db.all("SELECT * FROM usernames WHERE name = '" + req.body.name + "';", {}, function(err, data){
+  // db.all("SELECT * FROM topics WHERE user_id = '" + data.id + "';", {}, function(err, user){
+
   db.run("INSERT INTO comments (comment) VALUES ('" + req.body.comment + "')");
-  res.redirect('/topics/:id');
+  res.redirect('/topics/id');
   //user = req.body.name;
+
 });
 // THIS IS END OF COMMENTING ON SPECIFIC TOPIC
 
