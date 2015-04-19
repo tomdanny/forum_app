@@ -1,6 +1,7 @@
 var express = require('express');
 var sqlite3 = require('sqlite3');
 var fs = require('fs');
+var request = require('request');
 var Mustache = require('mustache');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
@@ -15,6 +16,17 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/views'));
 
+// --------------------------------------------------------
+
+// THIS IS GETTING USERNAMES CITY BY IPInfo API
+request('http://ipinfo.io/json', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+    var parseJson = JSON.parse(body);
+    var userCity = parseJson.city;
+
+// THIS IS THE END OF GETTING IPInfo API
+
+// --------------------------------------------------------
 
 // THIS IS WELCOME INDEX PAGE
 app.get('/', function(req, res) {
@@ -61,12 +73,12 @@ app.post('/usernames/create', function(req, res){
 // THIS IS CREATING NEW TOPIC
 app.post('/topics/new', function(req, res) {
   console.log(req.body)
-  db.all("SELECT * FROM usernames WHERE id = '" + req.body + "';", {}, function(err, data){
+  db.all("SELECT * FROM usernames WHERE id = '" + req.body.id + "';", {}, function(err, data){
     //console.log(data[0])
   db.all("SELECT * FROM topics WHERE user_id = '" + data.id + "';", {}, function(err, user){
     //console.log(user)
-    user = user.id
-  db.run("INSERT INTO topics (title, description, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + user + "')");
+    //user = user.id
+  db.run("INSERT INTO topics (title, description, vote, user_id) VALUES ('" + req.body.title + "', '" + req.body.description + "', '" + 0 + "', '" + req.body.name + "')");
   //console.log(req.body.name)
   res.redirect('/topics');
  });
@@ -81,11 +93,14 @@ app.post('/topics/new', function(req, res) {
 // THIS IS GETTING YOU TO SPECIFIC TOPIC TO VOTE OR COMMENT
 app.get('/topics/:id', function(req, res){
   var id = req.params.id;
+  //console.log(id)
   db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topic){
+  db.all("SELECT * FROM comments WHERE topic_id = " + id + ";", {}, function(err, comments){
     fs.readFile('./views/read_topic.html', 'utf8', function(err, html){
       //console.log(topic);
-      var renderedHTML = Mustache.render(html, topic[0]);
+      var renderedHTML = Mustache.render(html, {title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
       res.send(renderedHTML);
+    });
     });
   });
 });
@@ -122,18 +137,25 @@ app.put('/topics/:id', function(req, res){
 // ----------------------------------------------------------
 
 // THIS IS COMMENTING ON SPECIFIC TOPIC
-app.post('/topics/topic_id/comments', function(req, res){
-  //console.log(req.body);
+app.post('/topics/:id/comment', function(req, res){
+  var id = req.params.id;
+  console.log("Here's the " + id);
 
-  // db.all("SELECT * FROM usernames WHERE name = '" + req.body.name + "';", {}, function(err, data){
-  // db.all("SELECT * FROM topics WHERE user_id = '" + data.id + "';", {}, function(err, user){
-
-  db.run("INSERT INTO comments (comment) VALUES ('" + req.body.comment + "')");
-  res.redirect('/topics/id');
+  db.run("INSERT INTO comments (comment, location, topic_id) VALUES ('" + req.body.comment + "', '" + userCity + "', '" + id + "')");
+  res.redirect('/topics/');
   //user = req.body.name;
 
 });
 // THIS IS END OF COMMENTING ON SPECIFIC TOPIC
+
+// -------------------------------------------
+
+// THIS IS CLOSING BRACKETS OF IPInfo API
+  }
+});
+// THIS IS END OF COLSING BRACKETS OF IPInfo API
+
+// -------------------------------------------
 
 app.listen(3000, function() {
   console.log("LISTENING");

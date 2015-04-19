@@ -29,19 +29,23 @@
   <form method="POST" action="/topics/{{id}}?_method=PUT">
 
     <p>{{description}}</p>
-    <p>{{comment}}</p>
+    <!-- <p>{{comment}}</p> -->
     
     <input type="button" name="vote" value="{{vote}}">
     <button type="submit">Vote</button>
   </form><br />
 
-  <form method="POST" action="/topics/topic_id/comments">
+
+  <form method="POST" action="/topics/{{id}}/comment">
     <label>
       Leave a comment: <br />
-      <textarea name='comment' value="{{comment}}"></textarea><br />
-      <!-- <input type="text" width="50px" name="comment" value="{{comment}}"> -->
-      <button type="submit">Submit</button>
+      <!-- <textarea name="comment" value="{{comment}}"></textarea><br /> -->
+      <input type="text" name="comment">
+      <button type="submit">Submit</button><br />
     </label>
+    {{#comments}}
+     <li>{{comment}}</li><br />
+    {{/comments}}
 
   </form>
 

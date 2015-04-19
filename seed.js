@@ -11,7 +11,7 @@ db.serialize(function() {
 
 db.parallelize(function() {
   db.run("INSERT INTO usernames (name) VALUES ('tom_danny');");
-  db.run("INSERT INTO topics(title, description, vote, user_id) VALUES ('Life at GA', 'Interesting', 0, 0 );");
+  //db.run("INSERT INTO topics(title, description, vote, user_id) VALUES ('Life at GA', 'Interesting', 0, 0);");
   db.run("INSERT INTO comments(comment, location, topic_id) VAlUES ('First GA individual project', 'New York', 1);");
 
   });
