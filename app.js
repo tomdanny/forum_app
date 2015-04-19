@@ -98,7 +98,7 @@ app.get('/topics/:id', function(req, res){
   db.all("SELECT * FROM comments WHERE topic_id = " + id + ";", {}, function(err, comments){
     fs.readFile('./views/read_topic.html', 'utf8', function(err, html){
       //console.log(topic);
-      var renderedHTML = Mustache.render(html, {title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
+      var renderedHTML = Mustache.render(html, {id:topic[0].id, title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
       res.send(renderedHTML);
     });
     });
@@ -120,16 +120,11 @@ app.get('/topics/:id', function(req, res){
 app.put('/topics/:id', function(req, res){
   var id = req.params.id;
   var userVote = 0;
-  //if(id) {
-  while(userVote < 10) {
-  //for(var userVote = 0; userVote < 7;) {
 
-  //userVote ++;
-  //console.log(userVote)
-  //res.send(userInfo)
+  while(userVote < 10) {
+
   db.run("UPDATE topics SET vote = '" + userVote++ + "' WHERE id = " + id + ";");
   res.redirect('/topics/' + id);
-  //}
   }
 });
 // THIS IS THE END OF UPDATING VOTE ON SPECIFIC TOPIC
@@ -139,7 +134,6 @@ app.put('/topics/:id', function(req, res){
 // THIS IS COMMENTING ON SPECIFIC TOPIC
 app.post('/topics/:id/comment', function(req, res){
   var id = req.params.id;
-  console.log("Here's the " + id);
 
   db.run("INSERT INTO comments (comment, location, topic_id) VALUES ('" + req.body.comment + "', '" + userCity + "', '" + id + "')");
   res.redirect('/topics/');
