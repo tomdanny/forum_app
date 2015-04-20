@@ -19,6 +19,7 @@
     <button type="submit">Delete</button>
   </form>  -->
 
+
   <form method="POST" action="/topics/{{id}}?_method=PUT">
 
     <p>{{description}}</p>
@@ -34,9 +35,10 @@
       <!-- <textarea name="comment" value="{{comment}}"></textarea><br /> -->
       <input type="text" name="comment">
       <button type="submit">Submit</button><br />
-    </label>
+    </label><br />
     {{#comments}}
      <li>{{comment}}</li>
+     <!-- <li>{{user}}</li> -->
      <li>{{location}}</li><br />
     {{/comments}}
 

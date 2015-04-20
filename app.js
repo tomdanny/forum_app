@@ -93,14 +93,15 @@ app.post('/topics/new', function(req, res) {
 // THIS IS GETTING YOU TO SPECIFIC TOPIC TO VOTE OR COMMENT
 app.get('/topics/:id', function(req, res){
   var id = req.params.id;
-  //console.log(id)
+  // db.all("SELECT * FROM usernames WHERE id = " + id + ";", {}, function(err, user){
   db.all("SELECT * FROM topics WHERE id = " + id + ";", {}, function(err, topic){
   db.all("SELECT * FROM comments WHERE topic_id = " + id + ";", {}, function(err, comments){
     fs.readFile('./views/read_topic.html', 'utf8', function(err, html){
-      console.log(comments);
       var renderedHTML = Mustache.render(html, {id:topic[0].id, title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
       res.send(renderedHTML);
-    });
+      // user:user[0].name,
+        //});
+      });
     });
   });
 });
