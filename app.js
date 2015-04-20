@@ -100,7 +100,7 @@ app.get('/topics/:id', function(req, res){
       var renderedHTML = Mustache.render(html, {id:topic[0].id, title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
       res.send(renderedHTML);
       // user:user[0].name,
-        //});
+        // });
       });
     });
   });

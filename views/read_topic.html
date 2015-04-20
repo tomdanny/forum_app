@@ -13,36 +13,119 @@
       <!-- <li><a href="#">Worst Poems</a></li> -->
     </ul>
 
-  <h2>{{title}}</h2>
+  <!-- <h2>{{title}}</h2> -->
 
  <!--  <form method="POST" action="/topics/{{id}}?_method=DELETE">
     <button type="submit">Delete</button>
   </form>  -->
+<form method="POST" action="/topics/{{id}}?_method=PUT">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<tr>
+<td><table width="100%" border="0" cellpadding="3" cellspacing="1" bordercolor="1" bgcolor="#FFFFFF">
+<tr>
+<td align="center" bgcolor="#F8F7F1"><strong>{{title}}</strong></td>
+</tr>
 
+<tr>
+<td bgcolor="#F8F7F1">{{description}}</td>
+</tr>
 
-  <form method="POST" action="/topics/{{id}}?_method=PUT">
+<tr>
+<td align="right" bgcolor="#F8F7F1"><input type="button" name="vote" value="{{vote}}">
+    <button type="submit">Vote</button></td>
+</tr>
+
+<tr>
+<td bgcolor="#F8F7F1"><strong>Date/time : </strong><? echo $rows['datetime']; ?></td>
+</tr>
+</table></td>
+</tr>
+</table>
+<BR>
+</form>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<tr>
+<td><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+<form method="POST" action="/topics/{{id}}/comment">
+  {{#comments}}
+<tr>
+<td width="18%" bgcolor="#F8F7F1"><strong>Name</strong></td>
+<td width="5%" bgcolor="#F8F7F1">:</td>
+<td width="77%" bgcolor="#F8F7F1">{{user}}</td>
+</tr>
+<tr>
+<td bgcolor="#F8F7F1"><strong>Comments</strong></td>
+<td bgcolor="#F8F7F1">:</td>
+<td bgcolor="#F8F7F1">{{comment}}</td>
+</tr>
+<tr>
+<td bgcolor="#F8F7F1"><strong>Location</strong></td>
+<td bgcolor="#F8F7F1">:</td>
+<td bgcolor="#F8F7F1">{{location}}</td>
+</tr>
+{{/comments}}
+</form>
+</table></td>
+</tr>
+</table><br />
+
+<!-- ------------------------------------------------------------------------ -->
+
+<BR>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<tr>
+<form method="POST" action="/topics/{{id}}/comment">
+<td>
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+<tr>
+<td width="18%"><strong>Name</strong></td>
+<td width="3%">:</td>
+<td width="79%"><input name="name" type="text" size="45"></td>
+</tr>
+<tr>
+<td valign="top"><strong>Comment</strong></td>
+<td valign="top">:</td>
+<td><textarea name="comment" cols="45" rows="3"></textarea></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td><input name="id" type="hidden" value=""></td>
+<td><input type="submit" name="Submit" value="Submit"> <input type="reset" name="Submit2" value="Reset"></td>
+</tr>
+</table>
+</td>
+</form>
+</tr>
+</table>
+
+<!-- -------------------------------------------------------------------------- -->
+
+  <!-- <form method="POST" action="/topics/{{id}}?_method=PUT">
 
     <p>{{description}}</p>
     
     <input type="button" name="vote" value="{{vote}}">
     <button type="submit">Vote</button>
-  </form><br />
+  </form><br /> -->
 
 
-  <form method="POST" action="/topics/{{id}}/comment">
-    <label>
-      Leave a comment: <br />
+  <!-- <form method="POST" action="/topics/{{id}}/comment">
+    <label> -->
+      <!-- Leave a comment: <br /> -->
       <!-- <textarea name="comment" value="{{comment}}"></textarea><br /> -->
-      <input type="text" name="comment">
+      <!-- <input type="text" name="comment">
       <button type="submit">Submit</button><br />
     </label><br />
     {{#comments}}
-     <li>{{comment}}</li>
+     <li>{{comment}}</li> -->
      <!-- <li>{{user}}</li> -->
-     <li>{{location}}</li><br />
+     <!-- <li>{{location}}</li><br />
     {{/comments}}
 
-  </form>
+  </form> -->
 
 
   <!--<form method="POST" action="/topics/{{id}}?_method=DELETE">
