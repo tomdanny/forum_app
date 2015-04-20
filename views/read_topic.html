@@ -30,10 +30,17 @@
 <td bgcolor="#F8F7F1">{{description}}</td>
 </tr>
 
-<tr>
+<!-- <tr>
+
+<td input type="text" id="number" value="0"/>
+   <input type="button" onclick="incrementValue()" value="Increment Value" />
+</tr> -->
 <td align="right" bgcolor="#F8F7F1"><input type="button" name="vote" value="{{vote}}">
     <button type="submit">Vote</button></td>
-</tr>
+</tr> 
+<!-- <tr>
+<td align="right" bgcolor="#F8F7F1"><input type="text" id="number" name="vote" value="{{vote}}" /><button type="submit" onclick="incrementValue()"/>Vote</button></td>
+</tr> -->
 
 <tr>
 <td bgcolor="#F8F7F1"><strong>Date/time : </strong><? echo $rows['datetime']; ?></td>
@@ -51,11 +58,11 @@
 <td><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <form method="POST" action="/topics/{{id}}/comment">
   {{#comments}}
-<tr>
+<!-- <tr>
 <td width="18%" bgcolor="#F8F7F1"><strong>Name</strong></td>
 <td width="5%" bgcolor="#F8F7F1">:</td>
 <td width="77%" bgcolor="#F8F7F1">{{user}}</td>
-</tr>
+</tr> -->
 <tr>
 <td bgcolor="#F8F7F1"><strong>Comments</strong></td>
 <td bgcolor="#F8F7F1">:</td>
@@ -80,11 +87,11 @@
 <form method="POST" action="/topics/{{id}}/comment">
 <td>
 <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
-<tr>
+<!-- <tr>
 <td width="18%"><strong>Name</strong></td>
 <td width="3%">:</td>
 <td width="79%"><input name="name" type="text" size="45"></td>
-</tr>
+</tr> -->
 <tr>
 <td valign="top"><strong>Comment</strong></td>
 <td valign="top">:</td>

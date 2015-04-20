@@ -52,9 +52,12 @@ app.post('/usernames/create', function(req, res){
   app.get('/topics', function(req, res) {
     var template = fs.readFileSync('./views/topic.html', 'utf8');
 
-    db.all('SELECT * FROM topics;', function(err, topics) {
+    db.all('SELECT * FROM usernames;', function(err,user) {
+    db.all('SELECT * FROM topics ORDER BY vote DESC;', function(err, topics) {
       var html = Mustache.render(template, {allTopics: topics});
       res.send(html);
+      //});
+    });
   });
 });
 // THIS IS THE END OF ALL THE TOPICS
@@ -100,7 +103,7 @@ app.get('/topics/:id', function(req, res){
       var renderedHTML = Mustache.render(html, {id:topic[0].id, title:topic[0].title, description:topic[0].description, vote:topic[0].vote, comments:comments});
       res.send(renderedHTML);
       // user:user[0].name,
-        // });
+        //});
       });
     });
   });
@@ -118,15 +121,13 @@ app.get('/topics/:id', function(req, res){
 // ----------------------------------------------------------
 
 // THIS IS UPDATING VOTE ON SPECIFIC TOPIC
-app.put('/topics/:id', function(req, res){
+app.put('/topics/:id/', function(req, res){
   var id = req.params.id;
-  var userVote = 0;
-
-  while(userVote < 10) {
-
-  db.run("UPDATE topics SET vote = '" + userVote++ + "' WHERE id = " + id + ";");
+  
+  db.run("UPDATE topics SET vote = vote + 1 WHERE id = " + id + ";");
   res.redirect('/topics/' + id);
-  }
+  //}
+  //}
 });
 // THIS IS THE END OF UPDATING VOTE ON SPECIFIC TOPIC
 
@@ -137,7 +138,7 @@ app.post('/topics/:id/comment', function(req, res){
   var id = req.params.id;
 
   db.run("INSERT INTO comments (comment, location, topic_id) VALUES ('" + req.body.comment + "', '" + userCity + "', '" + id + "')");
-  res.redirect('/topics/');
+  res.redirect('/topics/' + id);
   //user = req.body.name;
 
 });
@@ -148,7 +149,7 @@ app.post('/topics/:id/comment', function(req, res){
 // THIS IS CLOSING BRACKETS OF IPInfo API
   }
 });
-// THIS IS END OF COLSING BRACKETS OF IPInfo API
+// THIS IS END OF CLOSING BRACKETS OF IPInfo API
 
 // -------------------------------------------
 
