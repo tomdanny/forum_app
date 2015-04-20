@@ -51,7 +51,8 @@ app.post('/usernames/create', function(req, res){
 // THIS IS LISTING ALL THE TOPICS
   app.get('/topics', function(req, res) {
     var template = fs.readFileSync('./views/topic.html', 'utf8');
-
+    // db.all('SELECT id, comment, COUNT(*) FROM comments GROUP BY id, comment;', function(err,user) {
+      //console.log(user[0].comment)
     db.all('SELECT * FROM usernames;', function(err,user) {
     db.all('SELECT * FROM topics ORDER BY vote DESC;', function(err, topics) {
       var html = Mustache.render(template, {allTopics: topics});
@@ -124,6 +125,7 @@ app.get('/topics/:id', function(req, res){
 app.put('/topics/:id/', function(req, res){
   var id = req.params.id;
   
+  // db.run("UPDATE comments")
   db.run("UPDATE topics SET vote = vote + 1 WHERE id = " + id + ";");
   res.redirect('/topics/' + id);
   //}
