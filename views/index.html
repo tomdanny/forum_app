@@ -10,18 +10,70 @@
 
     <header> <!-- Defining the header section of the page with the appropriate tag -->
 
-    <h1>Welcome to Jake's Forum</h1>
-    <h3>To continue to Jake's Forum page please sign up</h3>
+   
 
     </header>
 
-  <form action="/usernames/create" method="POST">
+  <section class="container">
+    <div class="login">
+    <h1>Welcome to Jake's Forum</h1>
+    <h3>Sign Up</h3>
+      <form method="post" action="/usernames/create">
+        <p><input type="text" name="login" value="" placeholder="Username or Email"></p>
+        </p>
+        <p class="submit"><input type="submit" name="commit" value="Login"></p>
+      </form>
+    </div>
+  </section>
+
+<!-- <div id="wrapper">
+<div id="login" class="animate form">
+      <form  action="/usernames/create" autocomplete="on" method="POST"> 
+        <h1>Log in</h1> 
+        <p> 
+          <label for="username" class="uname" data-icon="u" > Your email or username </label>
+          <input id="username" name="username" required="required" type="text" placeholder="username"/>
+        </p>
+          <p class="login button"> 
+          <input type="submit" value="Login" /> 
+        </p>
+      </form>
+</div>
+</div> -->
+
+
+<!-- <table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<tr>
+<form action="/usernames/create" method="POST">
+<td>
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+<tr>
+<td colspan="3" bgcolor="#E6E6E6"><strong>Sign Up</strong> </td>
+</tr>
+<tr>
+<td><strong>Username</strong></td>
+<td>:</td>
+<td><input name="name" type="text" size="50" /></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><input type="submit" name="Submit" value="Sign Up" /> 
+</tr>
+</table>
+</td>
+</form>
+</tr>
+</table> -->
+
+
+  <!-- <form action="/usernames/create" method="POST">
     <label>
       Your Username:
       <input type="text" name="name" />
     </label>
     <button>Sign Up</button>
-  </form>
+  </form> -->
 
 </body>
 </html>

@@ -8,8 +8,8 @@
 <body>
 
     <ul>
-      <li><a href="/">Home Page</a></li>
-      <li><a href="/topics">Topics</a></li>
+      <li><button><a href="/">Sign Up</a></button></li>
+      <li><button><a href="/topics">Home</a></button></li>
       <!-- <li><a href="#">Worst Poems</a></li> -->
     </ul>
 
@@ -19,7 +19,7 @@
     <button type="submit">Delete</button>
   </form>  -->
 <form method="POST" action="/topics/{{id}}?_method=PUT">
-<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<table width="800" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#CCCCCC">
 <tr>
 <td><table width="100%" border="0" cellpadding="3" cellspacing="1" bordercolor="1" bgcolor="#FFFFFF">
 <tr>
@@ -42,9 +42,9 @@
 <td align="right" bgcolor="#F8F7F1"><input type="text" id="number" name="vote" value="{{vote}}" /><button type="submit" onclick="incrementValue()"/>Vote</button></td>
 </tr> -->
 
-<tr>
+<!-- <tr>
 <td bgcolor="#F8F7F1"><strong>Date/time : </strong><? echo $rows['datetime']; ?></td>
-</tr>
+</tr> -->
 </table></td>
 </tr>
 </table>
@@ -53,7 +53,7 @@
 
 <!-- ---------------------------------------------------------------------- -->
 
-<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<table width="800" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#CCCCCC">
 <tr>
 <td><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <form method="POST" action="/topics/{{id}}/comment">
@@ -64,7 +64,7 @@
 <td width="77%" bgcolor="#F8F7F1">{{user}}</td>
 </tr> -->
 <tr>
-<td bgcolor="#F8F7F1"><strong>Comments</strong></td>
+<td bgcolor="#F8F7F1" width="10%"><strong>Comments</strong></td>
 <td bgcolor="#F8F7F1">:</td>
 <td bgcolor="#F8F7F1">{{comment}}</td>
 </tr>
@@ -82,7 +82,7 @@
 <!-- ------------------------------------------------------------------------ -->
 
 <BR>
-<table width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+<table width="800" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#CCCCCC">
 <tr>
 <form method="POST" action="/topics/{{id}}/comment">
 <td>
@@ -95,12 +95,12 @@
 <tr>
 <td valign="top"><strong>Comment</strong></td>
 <td valign="top">:</td>
-<td><textarea name="comment" cols="45" rows="3"></textarea></td>
+<td><textarea name="comment" cols="110" rows="3"></textarea></td>
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td><input name="id" type="hidden" value=""></td>
-<td><input type="submit" name="Submit" value="Submit"> <input type="reset" name="Submit2" value="Reset"></td>
+<td align="right"><input type="submit" name="Submit" value="Submit">  <input type="reset" name="Reset" value="Reset"></td>  
 </tr>
 </table>
 </td>
