@@ -18,6 +18,9 @@
 
 ##Problems/Solutions
 
+1. Welcome unidentified
+  * problem with template syntax ":" instead "=" 
+
 1. Can't set headers after they are sent.' error
 
 2. Can't POST /topic//new
